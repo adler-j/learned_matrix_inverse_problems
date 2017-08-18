@@ -15,11 +15,11 @@
 \begin{document}
 	\maketitle
 	
-	Suppose $A : \mathbb{R}^n \to \mathbb{R}^m$ is a forward operator and we have data of the form
-	\begin{align*}
-		x \in&\ \mathcal{N}(0, \Sigma) \\
-		y \in&\ \mathcal{N}(Ax, \Gamma)
-	\end{align*}
+	Suppose $A : \mathbb{R}^n \to \mathbb{R}^m$ is a linear forward operator (a matrix) and we have data of the form
+	\begin{align}
+		x \in&\ \mathcal{N}(0, \Sigma) \nonumber \\
+		y \in&\ \mathcal{N}(Ax, \Gamma) \label{eq:inv_prob}
+	\end{align}	
 	
 	\paragraph{Theorem 1:}
 	The maximum a posteriori (MAP) estimate of $x$ given $y$
@@ -57,6 +57,14 @@
 		x = (A^T \Gamma^{-1} A + \Sigma^{-1})^{-1} A^T \Gamma^{-1} y
 	\]
 	
+	\paragraph{Connection to Tikhonov regularization:}
+	
+	By identification, this is equivalent to solving the Tikhonov regularized problem:
+	
+	\[
+		\min_x \| \Gamma^{-1/2} \bigl(Ax - y\bigr) \| + \|\Sigma^{-1/2} x\|
+	\]
+	
 	\paragraph{Theorem 2:} We have
 	\[
 		\arg \min_{B} \mathbb{E}_{(x, y)} \|B(y) - x\|_2^2 = \mathbb{E}_{x}\bigl(x \mid y \bigr)
@@ -82,5 +90,22 @@
 	\[
 		B(y) = \mathbb{E}_{x}\bigl(x \mid y \bigr)
 	\]
+	
+	\paragraph{Theorem 3:} A neural network, which we denote by $A^{-1}_{NN}$, will in the limit of infinite capacity and trained to solve the inverse problem equation \ref{eq:inv_prob} according to
+	\[
+		\arg \min_{A^{-1}_{NN}} \mathbb{E}_{(x, y)} \|A^{-1}_{NN}(y) - x\|_2^2
+	\]
+	is given by the MAP estimate:
+	\[
+		A^{-1}_{NN}(y) = (A^T \Gamma^{-1} A + \Sigma^{-1})^{-1} A^T \Gamma^{-1} y
+	\]
+	
+	\paragraph{Proof:} By theorem 2, we have that the optimum solution of the training problem is given by the conditional expectation. Since neural networks are universal function approximators, this will be attainable in the limit of infinite capacity.
+	
+	Further, for Guassian distributions the mean and the mode coincide. Thus the conditional expectation, being a gaussian, is the MAP estimate.
+	
+	\paragraph{Sources:}
+	
+	Murphy 4.4
 	
 \end{document}
