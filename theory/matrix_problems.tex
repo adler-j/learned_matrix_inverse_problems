@@ -59,27 +59,28 @@
 	
 	\paragraph{Theorem 2:} We have
 	\[
-		\arg \min_{B} \mathbb{E}_{(x, y)} \|B(y) - x\|_2^2 = \left\{ y \mapsto \int x P(x | y) dx \right\}
+		\arg \min_{B} \mathbb{E}_{(x, y)} \|B(y) - x\|_2^2 = \mathbb{E}_{x}\bigl(x \mid y \bigr)
 	\]
-	where the minimization is taken over all operators $\mathbb{R}^m \to \mathbb{R}^n$.
+	where the minimization is taken over all operators $\mathbb{R}^m \to \mathbb{R}^n$.\footnote{This is also given in Bishop, 1.5.5}
 	
-	\paragraph{Proof:} By the definition of the expectation and the chain rule for probabilities
+	\paragraph{Proof:} By the law of total probability
 	\begin{align*}
-		\mathbb{E}_{(x, y)} \|B(y) - x\|_2^2
-		=&\ \int \int \|B(y) - x\|_2^2 P(x, y) dx dy \\
-		=&\ \int \left(\int \|B(y) - x\|_2^2 P(x | y) dx \right) P(y) dy \\
+		\mathbb{E}_{(x, y)} \|B(y) - x\|_2^2 = 
+		\mathbb{E}_{y} \bigl(\mathbb{E}_{x}\bigl(\|B(y) - x\|_2^2 \mid y \bigr)\bigr)
 	\end{align*}
-	Since $P(y) \geq 0$ by the monotonicity of the integral we have
+	By the monotonicity of the expectation we have
 	\[
-		B(y) = \arg\min_{z} \int \|z - x\|_2^2 P(x | y) dx
+		B(y) = \arg\min_{z} \mathbb{E}_{x}\bigl(\|z - x\|_2^2 \mid y \bigr)
 	\]
 	we find this by differentiating and setting to zero
 	\[
-		0 = \int 2(z - x) P(x | y) dx = 2 z \underbrace{\int P(x | y) dx}_{1} - 2 \int x P(x | y) dx
+	    0 =
+	    \mathbb{E}_{x}\bigl(2 (z - x) \mid y \bigr) =
+	    2\mathbb{E}_{x}\bigl(z \mid y \bigr) - 2\mathbb{E}_{x}\bigl(x \mid y \bigr)
 	\]
 	which gives
 	\[
-		B(y) = \int x P(x | y) dx
+		B(y) = \mathbb{E}_{x}\bigl(x \mid y \bigr)
 	\]
 	
 \end{document}
