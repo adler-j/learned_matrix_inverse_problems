@@ -69,6 +69,7 @@
 	
 \section{Best function estimate}
 \begin{theorem}[{\cite[\S\,1.5.5]{Bi2006}}]
+\label{prop:bestfunest}
   We have
 	\[
 		\arg \min_{B} \mathbb{E}_{(x, y)} \|B(y) - x\|_2^2 = \mathbb{E}_{x}\bigl(x \mid y \bigr)
@@ -107,7 +108,7 @@
 	\]
 \end{theorem}
 
-	\begin{proof} By theorem 2, we have that the optimum solution of the training problem is given by the conditional expectation. Since neural networks are universal function approximators, this will be attainable in the limit of infinite capacity.
+	\begin{proof} By \autoref{prop:bestfunest}, we have that the optimum solution of the training problem is given by the conditional expectation. Since neural networks are universal function approximators, this will be attainable in the limit of infinite capacity.
 	
 	Further, for Gaussian distributions the mean and the mode coincide. Thus the conditional expectation, being a gaussian, is the MAP estimate.
 \end{proof}
