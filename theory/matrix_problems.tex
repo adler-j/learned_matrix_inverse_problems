@@ -21,7 +21,7 @@
 	\end{align}	
 	
 
-  \begin{theorem}
+  \begin{theorem}[{\cite[\S\,4.4]{Mu2012}}]
 	The maximum a posteriori (MAP) estimate of $x$ given $y$
 	\[
 	    A^{-1}_{MAP}(y) = \arg\max_{x'} P(x' | y)
@@ -68,7 +68,8 @@
 	\]
 	
 \section{Best function estimate}
-  \begin{theorem} We have
+\begin{theorem}[{\cite[\S\,1.5.5]{Bi2006}}]
+  We have
 	\[
 		\arg \min_{B} \mathbb{E}_{(x, y)} \|B(y) - x\|_2^2 = \mathbb{E}_{x}\bigl(x \mid y \bigr)
 	\]
@@ -111,10 +112,7 @@
 	Further, for Guassian distributions the mean and the mode coincide. Thus the conditional expectation, being a gaussian, is the MAP estimate.
 \end{proof}
 
-	\paragraph{Sources:}
-	
-	\cite[\S\,4.4]{Mu2012}
-  \cite[\S\,1.5.5]{Bi2006}
+  
 
 \printbibliography%
 	
