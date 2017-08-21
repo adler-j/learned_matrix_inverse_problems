@@ -1,11 +1,8 @@
 \documentclass[a4paper,10pt]{article}
-\usepackage{graphicx}
-\usepackage{amssymb}
-\usepackage{amsmath}
-%\usepackage{bbold}
-\usepackage{epstopdf}
-\usepackage[section]{placeins}
-\usepackage{subcaption}
+
+\usepackage[biblatex, theoremdefs]{allergy}
+
+\addbibresource{refs.bib}
 
 
 \title{Learning theory for matrix inverse problems with gaussian priors}
@@ -15,13 +12,16 @@
 \begin{document}
 	\maketitle
 	
+\section{Maximum a posteriori estimate}
+
 	Suppose $A : \mathbb{R}^n \to \mathbb{R}^m$ is a linear forward operator (a matrix) and we have data of the form
 	\begin{align}
 		x \in&\ \mathcal{N}(0, \Sigma) \nonumber \\
 		y \in&\ \mathcal{N}(Ax, \Gamma) \label{eq:inv_prob}
 	\end{align}	
 	
-	\paragraph{Theorem 1:}
+
+  \begin{theorem}[{\cite[\S\,4.4]{Mu2012}}]
 	The maximum a posteriori (MAP) estimate of $x$ given $y$
 	\[
 	    A^{-1}_{MAP}(y) = \arg\max_{x'} P(x' | y)
@@ -30,8 +30,9 @@
 	\[
 		A^{-1}_{MAP}(y) = (A^T \Gamma^{-1} A + \Sigma^{-1})^{-1} A^T \Gamma^{-1} y
 	\]
-	
-	\paragraph{Proof:} We have
+\end{theorem}
+
+	\begin{proof} We have
 	\[
 		P(x' | y) \propto \underbrace{P(y | x')}_{\mathcal{N}(Ax', I)} \hspace{2mm} \underbrace{P(x')}_{\mathcal{N}(0, I)} 
 	\]
@@ -56,7 +57,8 @@
 	\[
 		x = (A^T \Gamma^{-1} A + \Sigma^{-1})^{-1} A^T \Gamma^{-1} y
 	\]
-	
+\end{proof}
+
 	\paragraph{Connection to Tikhonov regularization:}
 	
 	By identification, this is equivalent to solving the Tikhonov regularized problem:
@@ -65,13 +67,17 @@
 		\min_x \| \Gamma^{-1/2} \bigl(Ax - y\bigr) \| + \|\Sigma^{-1/2} x\|
 	\]
 	
-	\paragraph{Theorem 2:} We have
+\section{Best function estimate}
+\begin{theorem}[{\cite[\S\,1.5.5]{Bi2006}}]
+\label{prop:bestfunest}
+  We have
 	\[
 		\arg \min_{B} \mathbb{E}_{(x, y)} \|B(y) - x\|_2^2 = \mathbb{E}_{x}\bigl(x \mid y \bigr)
 	\]
-	where the minimization is taken over all operators $\mathbb{R}^m \to \mathbb{R}^n$.\footnote{This is also given in Bishop, 1.5.5}
-	
-	\paragraph{Proof:} By the law of total probability
+	where the minimization is taken over all functions $B \colon \mathbb{R}^m \to \mathbb{R}^n$.
+\end{theorem} 
+
+	\begin{proof} By the law of total probability
 	\begin{align*}
 		\mathbb{E}_{(x, y)} \|B(y) - x\|_2^2 = 
 		\mathbb{E}_{y} \bigl(\mathbb{E}_{x}\bigl(\|B(y) - x\|_2^2 \mid y \bigr)\bigr)
@@ -90,8 +96,9 @@
 	\[
 		B(y) = \mathbb{E}_{x}\bigl(x \mid y \bigr)
 	\]
-	
-	\paragraph{Theorem 3:} A neural network, which we denote by $A^{-1}_{NN}$, will in the limit of infinite capacity and trained to solve the inverse problem equation \ref{eq:inv_prob} according to
+\end{proof} 
+
+	\begin{theorem} A neural network, which we denote by $A^{-1}_{NN}$, will in the limit of infinite capacity and trained to solve the inverse problem equation \ref{eq:inv_prob} according to
 	\[
 		\arg \min_{A^{-1}_{NN}} \mathbb{E}_{(x, y)} \|A^{-1}_{NN}(y) - x\|_2^2
 	\]
@@ -99,13 +106,15 @@
 	\[
 		A^{-1}_{NN}(y) = (A^T \Gamma^{-1} A + \Sigma^{-1})^{-1} A^T \Gamma^{-1} y
 	\]
+\end{theorem}
+
+	\begin{proof} By \autoref{prop:bestfunest}, we have that the optimum solution of the training problem is given by the conditional expectation. Since neural networks are universal function approximators, this will be attainable in the limit of infinite capacity.
 	
-	\paragraph{Proof:} By theorem 2, we have that the optimum solution of the training problem is given by the conditional expectation. Since neural networks are universal function approximators, this will be attainable in the limit of infinite capacity.
-	
-	Further, for Guassian distributions the mean and the mode coincide. Thus the conditional expectation, being a gaussian, is the MAP estimate.
-	
-	\paragraph{Sources:}
-	
-	Murphy 4.4
+	Further, for Gaussian distributions the mean and the mode coincide. Thus the conditional expectation, being a gaussian, is the MAP estimate.
+\end{proof}
+
+  
+
+\printbibliography%
 	
 \end{document}
