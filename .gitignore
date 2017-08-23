@@ -50,3 +50,5 @@ var/
 *.mtc1
 *.out
 *.synctex.gz
+*.bcf
+*.run.xml
