@@ -22,6 +22,7 @@
 	
 
   \begin{theorem}[{\cite[\S\,4.4]{Mu2012}}]
+  	\label{prop:mapest}
 	The maximum a posteriori (MAP) estimate of $x$ given $y$
 	\[
 	    A^{-1}_{MAP}(y) = \arg\max_{x'} P(x' | y)
@@ -123,24 +124,20 @@
 	\[
 		z \in \mathcal{N}(A^\dagger A x, A^\dagger \Gamma ({A^\dagger})^T)
 	\]
-	Hence the MAP estimate is (with $A^\dagger A = P_{A^*}$, $A A^\dagger = P_{A}$ being projection onto the range of $A^*$ and $A$ respectively)
+	Hence the MAP estimate is (with $A^\dagger A = P_{A^*}$, $A A^\dagger = P_{A}$ being projection onto the range of $A^*$ and $A$ respectively) via straightforward application of theorems \ref{prop:mapest} and \ref{prop:bestfunest}:
 	\begin{align*}
-		A^{-1}_{\text{denoising}}(z) 
+		A^{-1}_{\text{denoising}}(A^\dagger y) 
 		=&\
-		((A^\dagger A)^T (A^\dagger \Gamma ({A^\dagger})^T)^{\dagger} (A^\dagger A) + \Sigma^{-1})^{\dagger} (A^\dagger A)^T (A^\dagger \Gamma ({A^\dagger})^T)^{\dagger} z
+		\big((A^\dagger A)^T (A^\dagger \Gamma ({A^\dagger})^T)^{\dagger} (A^\dagger A) + \Sigma^{-1}\big)^{\dagger} (A^\dagger A)^T (A^\dagger \Gamma ({A^\dagger})^T)^{\dagger} A^\dagger y
 		\\=&\
-		(P_{A^*}^T (A^T \Gamma^{\dagger} A) P_{A} + \Sigma^{-1})^{\dagger} P_{A^*}^T (A^T \Gamma^\dagger A) z
+		\big(P_{A^*}^T (A^T \Gamma^{\dagger} A) P_{A} + \Sigma^{-1}\big)^{\dagger} P_{A^*}^T (A^T \Gamma^\dagger A) A^\dagger y
 		\\=&\
-		(A P_{A^*})^T \Gamma^{\dagger} (A P_{A^*}) + \Sigma^{-1})^{\dagger} (A P_{A^*})^T \Gamma^\dagger A z
+		\big((A P_{A^*})^T \Gamma^{\dagger} (A P_{A^*}) + \Sigma^{-1}\big)^{\dagger} (A P_{A^*})^T \Gamma^\dagger P_A y
 	\end{align*}
 	Now via identification, $Az = A A^\dagger y$, so
-	\[
-		A^{-1}_{\text{denoising}}(z) 
-		(A P_{A^*})^T \Gamma^{\dagger} (A P_{A^*}) + \Sigma^{-1})^{\dagger} (A P_{A^*})^T \Gamma^\dagger P_A y
-	\]
 	This shows that:
 	\[
-		A^{-1}_{\text{denoising}}(z) = (A P_{A^*})^{-1}_{NN}(P_A y)
+		A^{-1}_{\text{denoising}}(A^\dagger y) = (A P_{A^*})^{-1}_{NN}(P_A y)
 	\]
 
 \printbibliography%
