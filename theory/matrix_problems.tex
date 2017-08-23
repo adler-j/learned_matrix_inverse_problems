@@ -134,11 +134,11 @@
 		\\=&\
 		\big((A P_{A^*})^T \Gamma^{\dagger} (A P_{A^*}) + \Sigma^{-1}\big)^{\dagger} (A P_{A^*})^T \Gamma^\dagger P_A y
 	\end{align*}
-	Now via identification, $Az = A A^\dagger y$, so
 	This shows that:
 	\[
 		A^{-1}_{\text{denoising}}(A^\dagger y) = (A P_{A^*})^{-1}_{NN}(P_A y)
 	\]
+	In particular, we see that learned denoising and reconstruction give the same result if $A$ is invertible.
 
 \printbibliography%
 	
