@@ -113,7 +113,35 @@
 	Further, for Gaussian distributions the mean and the mode coincide. Thus the conditional expectation, being a gaussian, is the MAP estimate.
 \end{proof}
 
-  
+	\paragraph{Denoising}
+	
+	Consider the case of denoising where instead of observing $y$ as in \ref{eq:inv_prob}, we first apply the pseudo-inverse
+	\[
+		z = A^\dagger y
+	\]
+	By standard arguments this is also a gaussian and we find
+	\[
+		z \in \mathcal{N}(A^\dagger A x, A^\dagger \Gamma ({A^\dagger})^T)
+	\]
+	Hence the MAP estimate is (with $A^\dagger A = P_{A^*}$, $A A^\dagger = P_{A}$ being projection onto the range of $A^*$ and $A$ respectively)
+	\begin{align*}
+		A^{-1}_{\text{denoising}}(z) 
+		=&\
+		((A^\dagger A)^T (A^\dagger \Gamma ({A^\dagger})^T)^{\dagger} (A^\dagger A) + \Sigma^{-1})^{\dagger} (A^\dagger A)^T (A^\dagger \Gamma ({A^\dagger})^T)^{\dagger} z
+		\\=&\
+		(P_{A^*}^T (A^T \Gamma^{\dagger} A) P_{A} + \Sigma^{-1})^{\dagger} P_{A^*}^T (A^T \Gamma^\dagger A) z
+		\\=&\
+		(A P_{A^*})^T \Gamma^{\dagger} (A P_{A^*}) + \Sigma^{-1})^{\dagger} (A P_{A^*})^T \Gamma^\dagger A z
+	\end{align*}
+	Now via identification, $Az = A A^\dagger y$, so
+	\[
+		A^{-1}_{\text{denoising}}(z) 
+		(A P_{A^*})^T \Gamma^{\dagger} (A P_{A^*}) + \Sigma^{-1})^{\dagger} (A P_{A^*})^T \Gamma^\dagger P_A y
+	\]
+	This shows that:
+	\[
+		A^{-1}_{\text{denoising}}(z) = (A P_{A^*})^{-1}_{NN}(P_A y)
+	\]
 
 \printbibliography%
 	
